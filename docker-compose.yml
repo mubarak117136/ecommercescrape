@@ -34,7 +34,7 @@ services:
         depends_on:
             - db
             - redis
-    celery:
+    celery-beat:
         container_name: ecommercescrape_celery_beat
         image: docker.pkg.github.com/mubarak117136/ecommercescrape/ecommercescrape:dev
         command: celery -A ecommercescrape beat -l info -S django
