@@ -34,5 +34,17 @@ services:
         depends_on:
             - db
             - redis
+    celery:
+        container_name: ecommercescrape_celery
+        image: docker.pkg.github.com/mubarak117136/ecommercescrape/ecommercescrape:dev
+        command: celery -A ecommercescrape beat -l info -S django
+        environment:
+            - DJANGO_SETTINGS_MODULE:ecommercescrape.settings.dev
+        volumes:
+            - ./server:/app/server
+        depends_on:
+            - db
+            - redis
+            - celery
 volumes: 
     ecommercescrape-db:
