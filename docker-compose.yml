@@ -19,7 +19,6 @@ services:
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - ./:/app
-            - ./server/celery/celerybeat.pid:/app/server/celery/celerybeat.pid
         ports:
             - "8000:8000"
         depends_on: 
@@ -38,7 +37,7 @@ services:
     celery-beat:
         container_name: ecommercescrape_celery_beat
         image: docker.pkg.github.com/mubarak117136/ecommercescrape/ecommercescrape:dev
-        command: celery beat -A ecommercescrape --loglevel=INFO --pidfile="/app/server/celery/celerybeat.pid"
+        command: celery -A ecommercescrape beat -l INFO
         environment:
             - DJANGO_SETTINGS_MODULE:ecommercescrape.settings.dev
         volumes:
@@ -46,6 +45,5 @@ services:
         depends_on:
             - db
             - redis
-            - celery
 volumes: 
     ecommercescrape-db:
